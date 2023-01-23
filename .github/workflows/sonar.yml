@@ -25,7 +25,7 @@ jobs:
 
       - name: Run cmake
         run: |
-          mkdir build && cd build
+          mkdir build.ninja && cd build.ninja
           cmake .. -GNinja --preset linux-ninja-gnu
 
       - name: Run build-wrapper
