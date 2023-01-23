@@ -21,9 +21,12 @@ jobs:
       - name: Build deps
         run: |
           sudo apt update
-          sudo apt -y install ccache libboost-filesystem-dev libboost-program-options-dev libboost-system-dev libgtk-3-dev libsdl2-dev ninja-build lld-11
+          sudo apt -y install ccache libboost-filesystem-dev libboost-program-options-dev libboost-system-dev libgtk-3-dev libsdl2-dev ninja-build lld-11 clang
 
       - name: Run cmake
+        env:
+          CC: /usr/bin/clang
+          CXX: /usr/bin/clang++
         run: |
           mkdir build && cd build
           cmake .. -GNinja -DCMAKE_BUILD_TYPE=Debug
