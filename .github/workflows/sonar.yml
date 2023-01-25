@@ -30,17 +30,17 @@ jobs:
                            libgtk-3-dev \
                            xdg-desktop-portal \
                            openssl \
-                           clang-11
+                           clang-14
       - name: Generate build files
         env:
-          CC: /usr/bin/clang-11
-          CXX: /usr/bin/clang++-11
+          CC: /usr/bin/clang-14
+          CXX: /usr/bin/clang++-14
         run: |
           mkdir build && cd build
-          cmake .. -GNinja -DCMAKE_BUILD_TYPE=Debug
+          cmake .. --preset linux-ninja-clang-14
       - name: Run build-wrapper
         run: |
-          build-wrapper-linux-x86-64 --out-dir ${{ env.BUILD_WRAPPER_OUT_DIR }} ninja -C build
+          build-wrapper-linux-x86-64 --out-dir ${{ env.BUILD_WRAPPER_OUT_DIR }} cmake --build build --config Debug
       - name: Run sonar-scanner
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
