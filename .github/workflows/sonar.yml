@@ -31,12 +31,18 @@ jobs:
                            xdg-desktop-portal \
                            openssl \
                            clang-14
+      - name: Install sccache
+        run: |
+          wget https://github.com/mozilla/sccache/releases/download/v0.4.0-pre.6/sccache-v0.4.0-pre.6-x86_64-unknown-linux-musl.tar.gz
+          tar -xf sccache-v0.4.0-pre.6-x86_64-unknown-linux-musl.tar.gz
+          cd sccache-v0.4.0-pre.6-x86_64-unknown-linux-musl
+          sudo chmod +x sccache
+          sudo ln -s $PWD/sccache /usr/local/bin/sccache
       - name: Generate build files
         env:
           CC: /usr/bin/clang-14
           CXX: /usr/bin/clang++-14
         run: |
-          mkdir ~/.ccache
           mkdir build && cd build
           cmake .. -DCMAKE_C_COMPILER_LAUNCHER=sccache \
                    -DCMAKE_CXX_COMPILER_LAUNCHER=sccache \
